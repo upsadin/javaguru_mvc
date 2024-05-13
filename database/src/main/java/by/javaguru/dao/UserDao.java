@@ -2,12 +2,29 @@ package by.javaguru.dao;
 
 import by.javaguru.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDao {
-    public Optional<User> findbyId(Long id) {
-        User user = new User();
-        user.setName("Андрей");
-        return Optional.of(user);
+    int idNum;
+
+    private List<User> users = new ArrayList<>();
+
+    public UserDao() {
+        users.add(new User(idNum++, "Pavel", 37, "u@gmail.com", "pavel", "passp"));
+        users.add(new User(idNum++, "Egor", 24, "e@gmail.com", "egor", "passe"));
+        users.add(new User(idNum++, "Sveta", 25, "s@gmail.com", "sveta", "passs"));
+    }
+    public Optional<User> findbyId(int id) {
+           return users.stream().filter(u -> u.getId()==id).findFirst();
+    }
+
+    public List<User> showAll() {
+        return users;
+    }
+
+    public Optional<User> findbyLoginAndPwd(String login, String pwd) {
+        return users.stream().filter(u -> login.equals(u.getLogin()) && pwd.equals(u.getPassword())).findFirst();
     }
 }

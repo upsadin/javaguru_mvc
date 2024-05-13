@@ -21,7 +21,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var user = userService.getUser(1L);
+        var user = userService.getUser(1);
 
         resp.setContentType("text/html");
         var writer = resp.getWriter();
