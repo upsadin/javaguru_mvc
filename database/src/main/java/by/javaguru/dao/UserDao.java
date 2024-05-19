@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDao {
+    private final String FIND_BY_ID = """
+            SELECT * FROM 
+            """;
     int idNum;
 
     private List<User> users = new ArrayList<>();
