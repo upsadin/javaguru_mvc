@@ -15,7 +15,7 @@ import java.util.Optional;
 @WebServlet("/auth")
 public class AuthenticationServlet extends HttpServlet {
 
-    UserService userService = new UserService();
+    UserService userService = UserService.getINSTANCE();
 
 
     @Override
@@ -28,10 +28,12 @@ public class AuthenticationServlet extends HttpServlet {
         session.setAttribute("login", login);
         session.setAttribute("pwd", pwd);
         Optional<User> user = userService.findbyLoginAndPwd(login, pwd);
+
         if(user.isEmpty()) {
             var writer = resp.getWriter();
-            writer.println("<h1> User is not exist </h1");
+            writer.println("<h1> User does not exist </h1");
         } else {
+            session.setAttribute("user", user.get());
             resp.sendRedirect("menu.html");
         }
     }
