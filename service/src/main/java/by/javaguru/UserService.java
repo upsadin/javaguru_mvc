@@ -25,6 +25,7 @@ public class UserService {
         return userDao.findbyId(id);
     }
 
+
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
         return userDao.findbyLoginAndPwd(login, pwd);
     }
@@ -32,6 +33,7 @@ public class UserService {
     public Optional<User> findbyLogin(String login) {
         return userDao.findbyLogin(login);
     }
+
 
     public void addUser(User user) {
         userDao.addUser(user);
