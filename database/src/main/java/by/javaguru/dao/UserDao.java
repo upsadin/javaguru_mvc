@@ -32,7 +32,7 @@ public class UserDao {
             VALUES(?, ?, ?, ?, ?);""";
 
     private final String UPDATE_USER = """
-            UPDATE USERS SET (name, age, email, login, password)
+            UPDATE USERS SET 
             name = ?, age = ?, email = ?, login = ?, password = ?            
             WHERE id = ?;""";
 
@@ -79,7 +79,7 @@ public class UserDao {
         try (PreparedStatement statement = BaseConnector.open().prepareStatement(FIND_ALL)) {
             statement.executeQuery();
             ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 users.add(generateFromresultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -90,12 +90,13 @@ public class UserDao {
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
         User user = null;
-        try (PreparedStatement statement = BaseConnector.open().prepareStatement(FIND_BY_LOGIN)) {
+        try (PreparedStatement statement = BaseConnector.open()
+                .prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, pwd);
             statement.executeQuery();
             ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = generateFromresultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -106,11 +107,11 @@ public class UserDao {
 
     public Optional<User> findbyLogin(String login) {
         User user = null;
-        try (PreparedStatement statement = BaseConnector.open().prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
+        try (PreparedStatement statement = BaseConnector.open().prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             statement.executeQuery();
             ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = generateFromresultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -137,7 +138,6 @@ public class UserDao {
     private static User generateFromresultSet(ResultSet resultSet) {
         User user = null;
         try {
-            while (resultSet.next()) {
                 user = new User(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
@@ -146,7 +146,6 @@ public class UserDao {
                 resultSet.getString("login"),
                 resultSet.getString("password")
                 );
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

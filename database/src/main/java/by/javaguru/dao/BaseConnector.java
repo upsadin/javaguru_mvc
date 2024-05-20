@@ -15,16 +15,18 @@ public class BaseConnector {
     private BaseConnector() {
     }
 
-    public static Connection open() throws ClassNotFoundException {
+    public static Connection open() {
         try {
             Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(URL_KEY, LOGIN, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
         Connection open = open();
         try {
 
