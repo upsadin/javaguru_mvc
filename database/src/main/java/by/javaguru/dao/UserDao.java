@@ -1,6 +1,8 @@
 package by.javaguru.dao;
 
 import by.javaguru.entity.User;
+import by.javaguru.util.HibernateUtil;
+import org.hibernate.Session;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,37 +43,21 @@ public class UserDao {
             """;
 
     public void addUser(User user) {
-        try (PreparedStatement statement = BaseConnector.open().prepareStatement(ADD_USER,
-                Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, user.getName());
-            statement.setInt(2, user.getAge());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPassword());
-            statement.executeUpdate();
-            ResultSet keys = statement.getGeneratedKeys();
-            if (keys.next()) {
-                int id = keys.getInt(1);
-                user.setId(id);
+        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
+            session.beginTransaction();
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            session.persist(user);
+            session.getTransaction().commit();
         }
     }
     public Optional<User> findbyId(int id) {
-        User user = new User();
-           try (PreparedStatement statement = BaseConnector.open().prepareStatement(FIND_BY_ID)) {
-               statement.setInt(1, id);
-               statement.executeQuery();
-               ResultSet resultSet = statement.getResultSet();
+        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
+            session.beginTransaction();
 
-               user = generateFromresultSet(resultSet);
-
-           } catch (SQLException e) {
-               throw new RuntimeException(e);
-           }
-        return Optional.ofNullable(user);
+            Optional<User> user = Optional.ofNullable(session.get(User.class, id));
+            session.getTransaction().commit();
+            return user;
+        }
     }
 
     public List<User> showAll() {
@@ -89,18 +75,13 @@ public class UserDao {
     }
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
-        User user = null;
-        try (PreparedStatement statement = BaseConnector.open()
-                .prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
-            statement.setString(1, login);
-            statement.setString(2, pwd);
-            statement.executeQuery();
-            ResultSet resultSet = statement.getResultSet();
-            if (resultSet.next()) {
-                user = generateFromresultSet(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        Session session = HibernateUtil.buildSessionFactory().openSession();
+        session.beginTransaction();
+
+        session.createQuery(FIND_BY_LOGIN_AND_PASSWORD);
+        session.set
+
+        session.getTransaction().commit();
         }
         return Optional.ofNullable(user);
     }
