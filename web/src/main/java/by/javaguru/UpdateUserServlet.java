@@ -29,7 +29,13 @@ public class UpdateUserServlet extends HttpServlet {
         String login = req.getParameter("login");
         String pwd = req.getParameter("pwd");
 
-        User user = new User(name, Integer.parseInt(age), email, login, pwd);
+        User user = User.builder()
+                .name(name)
+                .age(Integer.parseInt(age))
+                .email(email)
+                .login(login)
+                .password(pwd)
+                .build();
         user.setId(oldUser.getId());
         userService.updateUser(user);
         session.setAttribute("user", user);

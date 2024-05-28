@@ -31,7 +31,13 @@ public class RegistrationServlet extends HttpServlet {
         if (findUser.isPresent()) {
             writer.println("<h1> This user already exist </h1>");
         } else {
-            User user = new User(name, Integer.parseInt(age), email, login, pwd);
+            User user = User.builder()
+                    .name(name)
+                    .age(Integer.parseInt(age))
+                    .email(email)
+                    .login(login)
+                    .password(pwd)
+                    .build();
             userService.addUser(user);
             writer.println("<h1> User " + name + " is added </h1>");
             writer.println("<a href = \" index.html\"> Go to the start page </a>");

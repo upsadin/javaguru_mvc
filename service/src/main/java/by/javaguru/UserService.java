@@ -2,11 +2,14 @@ package by.javaguru;
 
 import by.javaguru.dao.UserDao;
 import by.javaguru.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 public class UserService {
     private final UserDao userDao = new UserDao();
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     private static UserService INSTANCE;
 
@@ -27,19 +30,28 @@ public class UserService {
 
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
-        return userDao.findbyLoginAndPwd(login, pwd);
+        Optional<User> user= userDao.findbyLoginAndPwd(login, pwd);
+        LOG.warn("Found user{}", user.get());
+        return user;
+
     }
 
     public Optional<User> findbyLogin(String login) {
-        return userDao.findbyLogin(login);
+        Optional<User> user = userDao.findbyLogin(login);
+        LOG.warn("Found user{}", user.get());
+        return user;
     }
 
 
     public void addUser(User user) {
+
         userDao.addUser(user);
+        LOG.info("user{} is created", user);
     }
 
     public void updateUser(User user) {
         userDao.updateUser(user);
+        LOG.info("user{} is updated", user);
+        LOG.warn("user{} is updated", user);
     }
 }
