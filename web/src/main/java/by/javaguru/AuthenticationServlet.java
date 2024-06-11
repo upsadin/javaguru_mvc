@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/auth")
+@WebServlet(urlPatterns = {"/auth"})
 public class AuthenticationServlet extends HttpServlet {
 
     UserService userService = UserService.getINSTANCE();
