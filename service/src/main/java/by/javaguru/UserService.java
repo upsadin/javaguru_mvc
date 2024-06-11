@@ -4,9 +4,11 @@ import by.javaguru.dao.UserDao;
 import by.javaguru.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService {
     private final UserDao userDao = new UserDao();
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);

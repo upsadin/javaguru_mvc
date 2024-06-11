@@ -1,9 +1,11 @@
 package by.javaguru.dao;
 
 import by.javaguru.entity.User;
-import by.javaguru.util.HibernateUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+@Repository
 public class UserDao {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final String FIND_BY_LOGIN_AND_PASSWORD = """
             FROM User
@@ -28,7 +34,7 @@ public class UserDao {
 
 
     public void addUser(User user) {
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
+        try (Session session = entityManager.unwrap(Session.class)) {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
@@ -36,7 +42,7 @@ public class UserDao {
     }
 
     public Optional<User> findbyId(int id) {
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
+        try (Session session = entityManager.unwrap(Session.class)) {
             session.beginTransaction();
 
             Optional<User> user = Optional.ofNullable(session.get(User.class, id));
@@ -46,7 +52,7 @@ public class UserDao {
     }
 
     public List<User> showAll() {
-        Session session = HibernateUtil.buildSessionFactory().openSession();
+        Session session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         List<User> users = session.createQuery("from User").getResultList();
         session.getTransaction().commit();
@@ -54,7 +60,7 @@ public class UserDao {
     }
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
-        Session session = HibernateUtil.buildSessionFactory().openSession();
+        Session session = entityManager.unwrap(Session.class);
         session.beginTransaction();
 
         User user = null;
@@ -71,7 +77,7 @@ public class UserDao {
     }
 
     public Optional<User> findbyLogin(String login) {
-        Session session = HibernateUtil.buildSessionFactory().openSession();
+        Session session = entityManager.unwrap(Session.class);
         session.beginTransaction();
 
         User user = null;
@@ -87,7 +93,7 @@ public class UserDao {
     }
 
     public void updateUser(User user) {
-        Session session = HibernateUtil.buildSessionFactory().openSession();
+        Session session = entityManager.unwrap(Session.class);
         session.beginTransaction();
 
         session.merge(user);
