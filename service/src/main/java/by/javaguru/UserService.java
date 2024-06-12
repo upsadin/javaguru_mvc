@@ -25,10 +25,10 @@ public class UserService {
  /*   public Optional<UserDto> getUser(int id) {
         return userDao.findbyId(id).map(it -> new UserDto(it.getName()));
     }*/
-
+/*
     public Optional<User> getUser(int id) {
         return userDao.findbyId(id);
-    }
+    }*/
 
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
@@ -38,7 +38,7 @@ public class UserService {
 
     }
 
-    public Optional<User> findbyLogin(String login) {
+    /*public Optional<User> findbyLogin(String login) {
         Optional<User> user = userDao.findbyLogin(login);
         LOG.warn("Found user{}", user.get());
         return user;
@@ -55,5 +55,5 @@ public class UserService {
         userDao.updateUser(user);
         LOG.info("user{} is updated", user);
         LOG.warn("user{} is updated", user);
-    }
+    }*/
 }

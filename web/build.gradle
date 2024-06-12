@@ -1,0 +1,13 @@
+
+plugins {
+    id 'java-library'
+    id 'war'
+}
+
+dependencies {
+    api project(':service')
+    implementation 'jakarta.servlet:jakarta.servlet-api'
+    testImplementation 'junit:junit'
+}
+
+description = 'web'

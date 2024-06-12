@@ -1,0 +1,6 @@
+2024-06-06 18:13:50,661  WARN org.hibernate.orm.connections.pooling:configure:81 - HHH10001002: Using built-in connection pool (not intended for production use)
+2024-06-06 18:13:50,964  WARN org.hibernate.orm.deprecation:constructDialect:153 - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-06 18:13:53,265  WARN by.javaguru.UserService:findbyLoginAndPwd:35 - Found userUser(id=1, name=Павел Eeee, age=25, email=u@gmail.com, login=pavel, password=pp)
+2024-06-06 18:16:02,635  WARN org.hibernate.orm.connections.pooling:configure:81 - HHH10001002: Using built-in connection pool (not intended for production use)
+2024-06-06 18:16:02,988  WARN org.hibernate.orm.deprecation:constructDialect:153 - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-06 18:16:05,691  WARN by.javaguru.UserService:findbyLoginAndPwd:35 - Found userUser(id=1, name=Павел Eeee, age=25, email=u@gmail.com, login=pavel, password=pp)

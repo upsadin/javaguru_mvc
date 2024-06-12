@@ -27,7 +27,7 @@ public class RegistrationServlet extends HttpServlet {
         String login = req.getParameter("login");
         String pwd = req.getParameter("pwd");
 
-        Optional<User> findUser = userService.findbyLogin(login);
+        /*Optional<User> findUser = userService.findbyLogin(login);
         if (findUser.isPresent()) {
             writer.println("<h1> This user already exist </h1>");
         } else {
@@ -41,6 +41,6 @@ public class RegistrationServlet extends HttpServlet {
             userService.addUser(user);
             writer.println("<h1> User " + name + " is added </h1>");
             writer.println("<a href = \" index.html\"> Go to the start page </a>");
-        }
+        }*/
     }
 }

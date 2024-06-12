@@ -37,7 +37,7 @@ public class UpdateUserServlet extends HttpServlet {
                 .password(pwd)
                 .build();
         user.setId(oldUser.getId());
-        userService.updateUser(user);
+//        userService.updateUser(user);
         session.setAttribute("user", user);
         writer.println("<h1> User is updated </h1>");
         writer.println("<a href = \"/user\"> Go to user's page </a>");

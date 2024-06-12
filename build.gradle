@@ -31,16 +31,13 @@ allprojects {
 
 
 subprojects {
-    group = 'by.javaguru'
-    version = '1.0-SNAPSHOT'
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'

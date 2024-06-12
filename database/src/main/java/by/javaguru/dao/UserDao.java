@@ -4,7 +4,9 @@ import by.javaguru.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -19,8 +21,11 @@ import java.util.Optional;
 @Repository
 public class UserDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    /*@PersistenceContext
+    private EntityManager entityManager;*/
+
+    @Autowired
+    SessionFactory sessionFactory;
 
     private final String FIND_BY_LOGIN_AND_PASSWORD = """
             FROM User
@@ -33,7 +38,7 @@ public class UserDao {
             """;
 
 
-    public void addUser(User user) {
+  /*  public void addUser(User user) {
         try (Session session = entityManager.unwrap(Session.class)) {
             session.beginTransaction();
             session.save(user);
@@ -57,10 +62,11 @@ public class UserDao {
         List<User> users = session.createQuery("from User").getResultList();
         session.getTransaction().commit();
         return users;
-    }
+    }*/
 
     public Optional<User> findbyLoginAndPwd(String login, String pwd) {
-        Session session = entityManager.unwrap(Session.class);
+//        Session session = entityManager.unwrap(Session.class);
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
 
         User user = null;
@@ -76,7 +82,7 @@ public class UserDao {
         return Optional.ofNullable(user);
     }
 
-    public Optional<User> findbyLogin(String login) {
+    /*public Optional<User> findbyLogin(String login) {
         Session session = entityManager.unwrap(Session.class);
         session.beginTransaction();
 
@@ -98,5 +104,5 @@ public class UserDao {
 
         session.merge(user);
         session.getTransaction().commit();
-    }
+    }*/
 }
